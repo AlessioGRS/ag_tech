@@ -8,10 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  
   <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
@@ -196,14 +192,76 @@
     }
     .btn-secondary:hover { border-color: var(--fg2); color: var(--fg); }
 
+    /* hero bottom row: photo + terminal */
+    .hero-bottom {
+      margin-top: 4rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    /* photo card */
+    .hero-photo {
+      flex-shrink: 0;
+      width: 220px;
+      aspect-ratio: 3 / 4;
+      border: 1px solid var(--border2);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg3);
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .hero-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .hero-photo-placeholder svg {
+      opacity: 0.25;
+    }
+    .hero-photo-placeholder span {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--fg3);
+      line-height: 1.6;
+    }
+    /* accent corner tag */
+    .hero-photo::after {
+      content: 'AG';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0.5rem 0.75rem;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-align: right;
+    }
+
     /* terminal block */
     .hero-terminal {
-      margin-top: 4rem;
+      flex: 1;
+      min-width: 280px;
       background: var(--bg2);
       border: 1px solid var(--border2);
       border-radius: 4px;
       overflow: hidden;
-      max-width: 620px;
     }
     .terminal-bar {
       display: flex;
@@ -610,332 +668,176 @@
       .project-row { grid-template-columns: 40px 1fr; }
       .project-status { display: none; }
       .form-row { grid-template-columns: 1fr; }
+      .hero-bottom { flex-direction: column; }
+      .hero-photo { width: 100%; max-width: 260px; aspect-ratio: 1 / 1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <div class="nav-logo">AG<span>/</span>TECH</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#stack">Stack</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <a href="#contact" class="nav-cta">Hire me</a>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-tag">Available for freelance work</div>
-    <h1 class="hero-headline">
-      I automate<br/>the <em>boring stuff</em><br/>so your business<br/>can move faster.
-    </h1>
-    <p class="hero-sub">Software engineer specialised in .NET backend, PLC automation &amp; CI/CD — 7 years shipping industrial-grade systems for the automotive sector.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">Send an email</a>
-      <a href="#projects" class="btn-secondary">See my work</a>
-    </div>
-    <div class="hero-terminal">
-      <div class="terminal-bar">
-        <div class="terminal-dot r"></div>
-        <div class="terminal-dot y"></div>
-        <div class="terminal-dot g"></div>
-        <span class="terminal-title">agtech@dev ~ bash</span>
-      </div>
-      <div class="terminal-body" id="terminal-body">
-        <!-- filled by JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-wrap">
-      <div class="section-label">01 — About</div>
-      <div class="about-grid">
-        <div>
-          <h2 class="section-title fade-up">Engineer by<br/>trade. Automator<br/>by passion.</h2>
-          <div class="about-body fade-up">
-            <p>I'm a freelance software engineer with 7 years of experience building robust backend systems and industrial automation solutions. My work sits at the intersection of software and hardware — writing precise, maintainable code that controls real machines and runs production lines.</p>
-            <p>I've designed and delivered systems for some of the most demanding names in automotive manufacturing, where reliability isn't optional and downtime is never acceptable.</p>
-            <p>I work independently, communicate clearly, and deliver on time.</p>
-          </div>
-          <div class="about-clients fade-up" style="margin-top: 2rem;">
-            <div class="clients-label">Past clients include</div>
-            <div class="clients-list">
-              <span class="client-chip">Audi</span>
-              <span class="client-chip">Ferrari</span>
-              <span class="client-chip">Volvo</span>
-              <span class="client-chip">BMW</span>
-              <span class="client-chip">Bosch</span>
-              <span class="client-chip">Magna</span>
-            </div>
-          </div>
-        </div>
-        <div class="about-stats fade-up">
-          <div class="stat-cell">
-            <span class="stat-num">7+</span>
-            <span class="stat-label">Years experience</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-num">6</span>
-            <span class="stat-label">Major OEM clients</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-num">3</span>
-            <span class="stat-label">Core disciplines</span>
-          </div>
-          <div class="stat-cell">
-            <span class="stat-num">0</span>
-            <span class="stat-label">Missed deadlines</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section id="services">
-    <div class="section-wrap">
-      <div class="section-label">02 — Services</div>
-      <h2 class="section-title fade-up">What I build</h2>
-      <div class="services-grid">
-        <div class="service-card fade-up">
-          <div class="service-num">01</div>
-          <div class="service-name">.NET Development</div>
-          <div class="service-desc">Robust, scalable backend applications built with modern .NET — from microservices and REST APIs to complex domain-driven business logic. Clean architecture, thoroughly tested.</div>
-          <div class="service-tags">
-            <span class="tag">C# / .NET 8</span>
-            <span class="tag">ASP.NET Core</span>
-            <span class="tag">EF Core</span>
-          </div>
-        </div>
-        <div class="service-card fade-up">
-          <div class="service-num">02</div>
-          <div class="service-name">API Development</div>
-          <div class="service-desc">Design and implementation of production-grade APIs — RESTful or GraphQL, with authentication, rate limiting, documentation and versioning baked in from the start.</div>
-          <div class="service-tags">
-            <span class="tag">REST</span>
-            <span class="tag">SQL</span>
-            <span class="tag">Swagger / OpenAPI</span>
-          </div>
-        </div>
-        <div class="service-card fade-up">
-          <div class="service-num">03</div>
-          <div class="service-name">PLC Automation</div>
-          <div class="service-desc">Industrial control systems for production lines and machinery — from specification to commissioning. Specialised in Beckhoff TwinCAT for high-performance real-time control in demanding environments.</div>
-          <div class="service-tags">
-            <span class="tag">Beckhoff TwinCAT</span>
-            <span class="tag">IEC 61131-3</span>
-            <span class="tag">EtherCAT</span>
-          </div>
-        </div>
-        <div class="service-card fade-up">
-          <div class="service-num">04</div>
-          <div class="service-name">CI/CD Pipelines</div>
-          <div class="service-desc">Automated build, test and deployment pipelines that eliminate manual steps and reduce the risk of human error — so your team can ship confidently and frequently.</div>
-          <div class="service-tags">
-            <span class="tag">GitHub Actions</span>
-            <span class="tag">Docker</span>
-            <span class="tag">Azure DevOps</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STACK -->
-  <section id="stack">
-    <div class="section-wrap">
-      <div class="section-label">03 — Stack</div>
-      <h2 class="section-title fade-up">Tech I work with</h2>
-      <div class="stack-rows fade-up">
-        <div class="stack-row">
-          <span class="stack-cat">Languages</span>
-          <div class="stack-items">
-            <span class="stack-pill primary">C#</span>
-            <span class="stack-pill primary">SQL</span>
-            <span class="stack-pill">ST (IEC 61131)</span>
-            <span class="stack-pill">PowerShell</span>
-            <span class="stack-pill">YAML</span>
-          </div>
-        </div>
-        <div class="stack-row">
-          <span class="stack-cat">Frameworks</span>
-          <div class="stack-items">
-            <span class="stack-pill primary">.NET / ASP.NET</span>
-            <span class="stack-pill">Entity Framework</span>
-            <span class="stack-pill">xUnit / NUnit</span>
-          </div>
-        </div>
-        <div class="stack-row">
-          <span class="stack-cat">Automation</span>
-          <div class="stack-items">
-            <span class="stack-pill primary">Beckhoff TwinCAT</span>
-            <span class="stack-pill">EtherCAT</span>
-            <span class="stack-pill">ADS Protocol</span>
-          </div>
-        </div>
-        <div class="stack-row">
-          <span class="stack-cat">Database</span>
-          <div class="stack-items">
-            <span class="stack-pill primary">SQL Server</span>
-            <span class="stack-pill">PostgreSQL</span>
-            <span class="stack-pill">SQLite</span>
-          </div>
-        </div>
-        <div class="stack-row">
-          <span class="stack-cat">DevOps</span>
-          <div class="stack-items">
-            <span class="stack-pill">GitHub Actions</span>
-            <span class="stack-pill">Azure DevOps</span>
-            <span class="stack-pill">Docker</span>
-            <span class="stack-pill">Git</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section id="projects">
-    <div class="section-wrap">
-      <div class="section-label">04 — Projects</div>
-      <h2 class="section-title fade-up">Selected work</h2>
-      <div class="projects-list fade-up">
-        <div class="project-row">
-          <span class="project-index">01</span>
-          <div class="project-info">
-            <div class="project-name">Electric Motor Production Line</div>
-            <div class="project-desc">End-to-end automation software for a high-throughput electric motor assembly line. Designed the PLC control architecture using Beckhoff TwinCAT, integrated with MES and SCADA layers for full traceability.</div>
-            <div class="project-tags">
-              <span class="tag">Beckhoff</span>
-              <span class="tag">C#</span>
-              <span class="tag">SCADA</span>
-              <span class="tag">Automotive</span>
-            </div>
-          </div>
-          <div class="project-status">Delivered</div>
-        </div>
-        <div class="project-row">
-          <span class="project-index">02</span>
-          <div class="project-info">
-            <div class="project-name">Electric Drives Software Testing</div>
-            <div class="project-desc">Developed automated test software for electric drive units across multiple vehicle platforms. Reduced manual testing time by automating test sequences and generating structured reports.</div>
-            <div class="project-tags">
-              <span class="tag">.NET</span>
-              <span class="tag">Test Automation</span>
-              <span class="tag">ADS Protocol</span>
-              <span class="tag">EV</span>
-            </div>
-          </div>
-          <div class="project-status">Delivered</div>
-        </div>
-        <div class="project-row">
-          <span class="project-index">03</span>
-          <div class="project-info">
-            <div class="project-name">Results Databases</div>
-            <div class="project-desc">Designed and built centralised results database systems for manufacturing quality data — including APIs for real-time data ingestion from production machines and reporting dashboards.</div>
-            <div class="project-tags">
-              <span class="tag">SQL Server</span>
-              <span class="tag">ASP.NET</span>
-              <span class="tag">REST API</span>
-              <span class="tag">Quality Mgmt</span>
-            </div>
-          </div>
-          <div class="project-status">Delivered</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-wrap">
-      <div class="section-label">05 — Contact</div>
-      <div class="contact-grid">
-        <div class="contact-info fade-up">
-          <div>
-            <h2 class="section-title">Let's work<br/>together.</h2>
-            <p class="contact-blurb">Have a project that needs precision engineering? I'm available for freelance engagements — short sprints or long-term contracts.</p>
-          </div>
-          <div class="contact-links">
-            <a href="/cdn-cgi/l/email-protection#c7afa2ababa887a6a0b3a2a4afe9a3a2b1" class="contact-link">
-              <span class="contact-link-icon">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <rect x="1" y="3" width="12" height="8" rx="1" stroke="currentColor" stroke-width="1.2"/>
-                  <path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/>
-                </svg>
-              </span>
-              <span class="__cf_email__" data-cfemail="afc7cac3c3c0efcec8dbcaccc781cbcad9">[email&#160;protected]</span>
-            </a>
-            <a href="https://linkedin.com" target="_blank" class="contact-link">
-              <span class="contact-link-icon">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <rect x="1" y="1" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.2"/>
-                  <path d="M4 6v4M4 4.5v.01" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
-                  <path d="M7 10V7.5C7 6.7 7.7 6 8.5 6S10 6.7 10 7.5V10" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-                </svg>
-              </span>
-              linkedin.com/in/agtech
-            </a>
-          </div>
-        </div>
-        <div class="fade-up" id="contact-form-root"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-logo"><strong>AG</strong>/TECH — Software Engineering &amp; Automation</div>
-    <div class="footer-copy">© 2026 AG Tech. All rights reserved.</div>
-  </footer>
-
   <!-- ─── REACT APP ──────────────────────────────────────── -->
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
 
   <script type="text/babel">
     const { useState, useEffect, useRef } = React;
 
     /* ── TWEAKS ────────────────────────────────────────────── */
     const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
-      "accentColor": "oklch(0.72 0.18 142)",
-      "language": "EN",
+      "accentColor": "#19be1b",
+      "language": "IT",
       "availableForWork": true,
       "showClients": true
     }/*EDITMODE-END*/;
 
-    /* ── TERMINAL ANIMATION ────────────────────────────────── */
-    function Terminal() {
-      const lines = [
-        { type: 'cmd', prompt: '~', text: 'whoami' },
-        { type: 'out', text: 'Alessandro G. — Software Engineer & Automation Specialist' },
-        { type: 'cmd', prompt: '~', text: 'cat expertise.txt' },
-        { type: 'out', text: '.NET  |  PLC Automation  |  API Dev  |  CI/CD' },
-        { type: 'cmd', prompt: '~', text: 'echo $STATUS' },
-        { type: 'out', text: '✓ Available for freelance projects', accent: true },
-      ];
+    /* ── TRANSLATIONS ──────────────────────────────────────── */
+    const T = {
+      EN: {
+        nav: { about:'About', services:'Services', stack:'Stack', projects:'Projects', contact:'Contact', hire:'Hire me' },
+        hero: {
+          badge: 'Available for freelance work',
+          h1a: 'I automate', h1b: 'the', h1em: 'boring stuff', h1c: 'so your business', h1d: 'can move faster.',
+          sub: 'Software engineer specialised in .NET backend, PLC automation & CI/CD — 7 years shipping industrial-grade systems for the automotive sector.',
+          cta1: 'Send an email', cta2: 'See my work',
+        },
+        about: {
+          label: '01 — About',
+          h2a: 'Engineer by', h2b: 'trade. Automator', h2c: 'by passion.',
+          p1: "I'm a freelance software engineer with 7 years of experience building robust backend systems and industrial automation solutions. My work sits at the intersection of software and hardware — writing precise, maintainable code that controls real machines and runs production lines.",
+          p2: "I've designed and delivered systems for some of the most demanding names in automotive manufacturing, where reliability isn't optional and downtime is never acceptable.",
+          p3: 'I work independently, communicate clearly, and deliver on time.',
+          clientsLabel: 'Past clients include',
+          stats: ['Years experience','Major OEM clients','Core disciplines','Missed deadlines'],
+        },
+        services: {
+          label: '02 — Services',
+          h2: 'What I build',
+          items: [
+            { name: '.NET Development', desc: 'Robust, scalable backend applications built with modern .NET — from microservices and REST APIs to complex domain-driven business logic. Clean architecture, thoroughly tested.' },
+            { name: 'API Development', desc: 'Design and implementation of production-grade APIs — RESTful or GraphQL, with authentication, rate limiting, documentation and versioning baked in from the start.' },
+            { name: 'PLC Automation', desc: 'Industrial control systems for production lines and machinery — from specification to commissioning. Specialised in Beckhoff TwinCAT for high-performance real-time control in demanding environments.' },
+            { name: 'CI/CD Pipelines', desc: 'Automated build, test and deployment pipelines that eliminate manual steps and reduce the risk of human error — so your team can ship confidently and frequently.' },
+          ],
+        },
+        stack: {
+          label: '03 — Stack',
+          h2: 'Tech I work with',
+          cats: ['Languages','Frameworks','Automation','Database','DevOps'],
+        },
+        projects: {
+          label: '04 — Projects',
+          h2: 'Selected work',
+          status: 'Delivered',
+          items: [
+            { name: 'Electric Motor Production Line', desc: 'End-to-end automation software for a high-throughput electric motor assembly line. Designed the PLC control architecture using Beckhoff TwinCAT, integrated with MES and SCADA layers for full traceability.' },
+            { name: 'Electric Drives Software Testing', desc: 'Developed automated test software for electric drive units across multiple vehicle platforms. Reduced manual testing time by automating test sequences and generating structured reports.' },
+            { name: 'Results Databases', desc: 'Designed and built centralised results database systems for manufacturing quality data — including APIs for real-time data ingestion from production machines and reporting dashboards.' },
+          ],
+        },
+        contact: {
+          label: '05 — Contact',
+          h2a: "Let's work", h2b: 'together.',
+          blurb: "Have a project that needs precision engineering? I'm available for freelance engagements — short sprints or long-term contracts.",
+          fields: { name:'Name', email:'Email', company:'Company / Project', message:'Message', submit:'Send message →', sending:'Sending...', namePh:'Jane Smith', companyPh:'Acme Corp', messagePh:'Tell me about your project...' },
+          successTitle: 'Message received',
+          successMsg: "Thanks — I'll be in touch shortly.",
+          successSub: 'Typical response time: within 24h.',
+        },
+        footer: 'Software Engineering & Automation',
+        footerCopy: '© 2026 AG Tech. All rights reserved.',
+        terminal: [
+          { type:'cmd', text:'whoami' },
+          { type:'out', text:'Alessandro G. — Software Engineer & Automation Specialist' },
+          { type:'cmd', text:'cat expertise.txt' },
+          { type:'out', text:'.NET  |  PLC Automation  |  API Dev  |  CI/CD' },
+          { type:'cmd', text:'echo $STATUS' },
+          { type:'out', text:'✓ Available for freelance projects', accent: true },
+        ],
+      },
+      IT: {
+        nav: { about:'Chi sono', services:'Servizi', stack:'Stack', projects:'Progetti', contact:'Contatti', hire:'Assumimi' },
+        hero: {
+          badge: 'Disponibile per lavoro freelance',
+          h1a: 'Automatizzo', h1b: 'le', h1em: 'cose noiose', h1c: 'per far crescere', h1d: 'la tua azienda.',
+          sub: 'Ingegnere software specializzato in .NET backend, automazione PLC e CI/CD — 7 anni di sistemi industriali per il settore automotive.',
+          cta1: 'Invia una email', cta2: 'Vedi i miei lavori',
+        },
+        about: {
+          label: '01 — Chi sono',
+          h2a: 'Ingegnere per', h2b: 'mestiere. Automatore', h2c: 'per passione.',
+          p1: "Sono un ingegnere software freelance con 7 anni di esperienza nello sviluppo di sistemi backend robusti e soluzioni di automazione industriale. Il mio lavoro si trova all'intersezione tra software e hardware — scrivere codice preciso e manutenibile che controlla macchine reali e gestisce linee di produzione.",
+          p2: "Ho progettato e consegnato sistemi per alcuni dei nomi più esigenti nel settore automobilistico, dove l'affidabilità non è opzionale e i fermi macchina non sono mai accettabili.",
+          p3: 'Lavoro in modo indipendente, comunico con chiarezza e rispetto le scadenze.',
+          clientsLabel: 'Clienti passati',
+          stats: ['Anni di esperienza','Clienti OEM principali','Discipline principali','Scadenze mancate'],
+        },
+        services: {
+          label: '02 — Servizi',
+          h2: 'Cosa costruisco',
+          items: [
+            { name: 'Sviluppo .NET', desc: 'Applicazioni backend robuste e scalabili costruite con .NET moderno — da microservizi e API REST a logica di business complessa. Architettura pulita, testata a fondo.' },
+            { name: 'Sviluppo API', desc: 'Progettazione e implementazione di API di livello produzione — RESTful o GraphQL, con autenticazione, rate limiting, documentazione e versionamento integrati fin dall\'inizio.' },
+            { name: 'Automazione PLC', desc: 'Sistemi di controllo industriale per linee di produzione e macchinari — dalla specifica alla messa in servizio. Specializzato in Beckhoff TwinCAT per il controllo in tempo reale ad alte prestazioni.' },
+            { name: 'Pipeline CI/CD', desc: 'Pipeline automatizzate di build, test e deploy che eliminano i passaggi manuali e riducono il rischio di errori umani — così il tuo team può rilasciare con sicurezza e frequenza.' },
+          ],
+        },
+        stack: {
+          label: '03 — Stack',
+          h2: 'Tecnologie che uso',
+          cats: ['Linguaggi','Framework','Automazione','Database','DevOps'],
+        },
+        projects: {
+          label: '04 — Progetti',
+          h2: 'Lavori selezionati',
+          status: 'Consegnato',
+          items: [
+            { name: 'Linea di Produzione Motori Elettrici', desc: 'Software di automazione end-to-end per una linea di assemblaggio di motori elettrici ad alto rendimento. Progettata l\'architettura PLC con Beckhoff TwinCAT, integrata con livelli MES e SCADA per la piena tracciabilità.' },
+            { name: 'Test Software Azionamenti Elettrici', desc: 'Sviluppato software di test automatizzato per unità di azionamento elettrico su più piattaforme veicolo. Ridotto il tempo di test manuale automatizzando le sequenze di test e generando report strutturati.' },
+            { name: 'Database Risultati', desc: 'Progettati e costruiti sistemi centralizzati di database per i dati di qualità della produzione — incluse API per l\'acquisizione dati in tempo reale dalle macchine di produzione e dashboard di reporting.' },
+          ],
+        },
+        contact: {
+          label: '05 — Contatti',
+          h2a: 'Lavoriamo', h2b: 'insieme.',
+          blurb: "Hai un progetto che richiede ingegneria di precisione? Sono disponibile per incarichi freelance — sprint brevi o contratti a lungo termine.",
+          fields: { name:'Nome', email:'Email', company:'Azienda / Progetto', message:'Messaggio', submit:'Invia messaggio →', sending:'Invio...', namePh:'Mario Rossi', companyPh:'Acme Srl', messagePh:'Raccontami del tuo progetto...' },
+          successTitle: 'Messaggio ricevuto',
+          successMsg: "Grazie — ti risponderò a breve.",
+          successSub: 'Tempo di risposta tipico: entro 24h.',
+        },
+        footer: 'Ingegneria Software & Automazione',
+        footerCopy: '© 2026 AG Tech. Tutti i diritti riservati.',
+        terminal: [
+          { type:'cmd', text:'whoami' },
+          { type:'out', text:'Alessandro G. — Ingegnere Software & Specialista Automazione' },
+          { type:'cmd', text:'cat competenze.txt' },
+          { type:'out', text:'.NET  |  Automazione PLC  |  API Dev  |  CI/CD' },
+          { type:'cmd', text:'echo $STATO' },
+          { type:'out', text:'✓ Disponibile per progetti freelance', accent: true },
+        ],
+      },
+    };
 
+    /* ── TERMINAL ──────────────────────────────────────────── */
+    function Terminal({ lines }) {
       const [rendered, setRendered] = useState([]);
-      const [cursor, setCursor] = useState(true);
       const idx = useRef(0);
+      const timerRef = useRef(null);
 
       useEffect(() => {
-        const timer = setInterval(() => {
+        setRendered([]);
+        idx.current = 0;
+        clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => {
           if (idx.current < lines.length) {
-            setRendered(prev => [...prev, lines[idx.current]]);
+            const captured = idx.current;
+            setRendered(prev => [...prev, lines[captured]]);
             idx.current++;
           } else {
-            clearInterval(timer);
+            clearInterval(timerRef.current);
           }
         }, 520);
-        return () => clearInterval(timer);
-      }, []);
+        return () => clearInterval(timerRef.current);
+      }, [lines]);
 
       return (
         <div className="terminal-body">
@@ -959,12 +861,12 @@
     }
 
     /* ── CONTACT FORM ──────────────────────────────────────── */
-    function ContactForm() {
+    function ContactForm({ t }) {
+      const f = t.contact.fields;
       const [form, setForm] = useState({ name: '', email: '', company: '', message: '' });
-      const [status, setStatus] = useState('idle'); // idle | sending | sent
+      const [status, setStatus] = useState('idle');
 
-      const handle = (e) => setForm(f => ({...f, [e.target.name]: e.target.value}));
-
+      const handle = (e) => setForm(prev => ({...prev, [e.target.name]: e.target.value}));
       const submit = (e) => {
         e.preventDefault();
         setStatus('sending');
@@ -974,9 +876,9 @@
       if (status === 'sent') {
         return (
           <div style={{display:'flex',flexDirection:'column',gap:'1rem',padding:'2.5rem',background:'var(--bg3)',border:'1px solid var(--border2)',borderRadius:'2px'}}>
-            <div style={{fontFamily:'var(--mono)',fontSize:'0.7rem',letterSpacing:'0.15em',textTransform:'uppercase',color:'var(--accent)'}}>Message received</div>
-            <div style={{fontSize:'1.1rem',fontWeight:600,color:'var(--fg)'}}>Thanks — I'll be in touch shortly.</div>
-            <div style={{fontFamily:'var(--mono)',fontSize:'0.8rem',color:'var(--fg2)'}}>Typical response time: within 24h.</div>
+            <div style={{fontFamily:'var(--mono)',fontSize:'0.7rem',letterSpacing:'0.15em',textTransform:'uppercase',color:'var(--accent)'}}>{t.contact.successTitle}</div>
+            <div style={{fontSize:'1.1rem',fontWeight:600,color:'var(--fg)'}}>{t.contact.successMsg}</div>
+            <div style={{fontFamily:'var(--mono)',fontSize:'0.8rem',color:'var(--fg2)'}}>{t.contact.successSub}</div>
           </div>
         );
       }
@@ -985,98 +887,323 @@
         <form className="contact-form" onSubmit={submit}>
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Name</label>
-              <input className="form-input" name="name" value={form.name} onChange={handle} required placeholder="Jane Smith" />
+              <label className="form-label">{f.name}</label>
+              <input className="form-input" name="name" value={form.name} onChange={handle} required placeholder={f.namePh} />
             </div>
             <div className="form-group">
-              <label className="form-label">Email</label>
-              <input className="form-input" type="email" name="email" value={form.email} onChange={handle} required placeholder="jane@company.com" />
+              <label className="form-label">{f.email}</label>
+              <input className="form-input" type="email" name="email" value={form.email} onChange={handle} required placeholder="hello@company.com" />
             </div>
           </div>
           <div className="form-group">
-            <label className="form-label">Company / Project</label>
-            <input className="form-input" name="company" value={form.company} onChange={handle} placeholder="Acme Corp" />
+            <label className="form-label">{f.company}</label>
+            <input className="form-input" name="company" value={form.company} onChange={handle} placeholder={f.companyPh} />
           </div>
           <div className="form-group">
-            <label className="form-label">Message</label>
-            <textarea className="form-textarea" name="message" value={form.message} onChange={handle} required placeholder="Tell me about your project..." />
+            <label className="form-label">{f.message}</label>
+            <textarea className="form-textarea" name="message" value={form.message} onChange={handle} required placeholder={f.messagePh} />
           </div>
           <button className="form-submit" type="submit" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending...' : 'Send message →'}
+            {status === 'sending' ? f.sending : f.submit}
           </button>
         </form>
       );
     }
 
-    /* ── TWEAKS PANEL ──────────────────────────────────────── */
-    function TweaksApp() {
+    /* ── FULL PAGE (i18n-aware) ─────────────────────────────── */
+    function Page() {
       const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULS);
+      const t = T[tweaks.language] || T.EN;
 
+      /* accent color */
       useEffect(() => {
-        document.documentElement.style.setProperty('--accent', tweaks.accentColor);
-        // recompute dim
-        const dim = tweaks.accentColor.replace(/oklch\(([\d.]+) ([\d.]+) ([\d.]+)\)/, (_, l, c, h) => `oklch(${(parseFloat(l)*0.48).toFixed(2)} ${(parseFloat(c)*0.55).toFixed(2)} ${h})`);
+        const color = tweaks.accentColor;
+        document.documentElement.style.setProperty('--accent', color);
+        // compute dim: if hex, darken; if oklch, scale
+        let dim;
+        const oklchMatch = color.match(/oklch\(([\d.]+)\s+([\d.]+)\s+([\d.]+)\)/);
+        const hexMatch = color.match(/^#([0-9a-f]{6})$/i);
+        if (oklchMatch) {
+          dim = `oklch(${(parseFloat(oklchMatch[1])*0.45).toFixed(2)} ${(parseFloat(oklchMatch[2])*0.5).toFixed(2)} ${oklchMatch[3]})`;
+        } else if (hexMatch) {
+          dim = color + '55';
+        } else {
+          dim = color;
+        }
         document.documentElement.style.setProperty('--accent-dim', dim);
       }, [tweaks.accentColor]);
 
+      /* html lang attr */
       useEffect(() => {
-        const tag = document.querySelector('.hero-tag');
-        if (tag && tweaks.availableForWork !== undefined) {
-          tag.style.display = tweaks.availableForWork ? 'flex' : 'none';
-        }
-      }, [tweaks.availableForWork]);
+        document.documentElement.lang = tweaks.language === 'IT' ? 'it' : 'en';
+      }, [tweaks.language]);
 
-      useEffect(() => {
-        const clientsEl = document.querySelector('.about-clients');
-        if (clientsEl) clientsEl.style.display = tweaks.showClients ? 'block' : 'none';
-      }, [tweaks.showClients]);
+      const nav = t.nav;
+      const hero = t.hero;
+      const about = t.about;
+      const services = t.services;
+      const stack = t.stack;
+      const projects = t.projects;
+      const contact = t.contact;
+
+      const stackData = [
+        { cat: stack.cats[0], pills: ['C#','SQL','ST (IEC 61131)','PowerShell','YAML'], primary:[0,1] },
+        { cat: stack.cats[1], pills: ['.NET / ASP.NET','Entity Framework','xUnit / NUnit'], primary:[0] },
+        { cat: stack.cats[2], pills: ['Beckhoff TwinCAT','EtherCAT','ADS Protocol'], primary:[0] },
+        { cat: stack.cats[3], pills: ['SQL Server','PostgreSQL','SQLite'], primary:[0] },
+        { cat: stack.cats[4], pills: ['GitHub Actions','Azure DevOps','Docker','Git'], primary:[] },
+      ];
+
+      const projectTags = [
+        ['Beckhoff','C#','SCADA','Automotive'],
+        ['.NET','Test Automation','ADS Protocol','EV'],
+        ['SQL Server','ASP.NET','REST API','Quality Mgmt'],
+      ];
 
       return (
-        <TweaksPanel>
-          <TweakSection title="Accent Color">
-            <TweakColor label="Primary accent" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
-          </TweakSection>
-          <TweakSection title="Language">
-            <TweakRadio
-              label="Site language"
-              value={tweaks.language}
-              options={[{label:'EN',value:'EN'},{label:'IT',value:'IT'}]}
-              onChange={v => setTweak('language', v)}
-            />
-          </TweakSection>
-          <TweakSection title="Visibility">
-            <TweakToggle label="Available for work badge" value={tweaks.availableForWork} onChange={v => setTweak('availableForWork', v)} />
-            <TweakToggle label="Show client list" value={tweaks.showClients} onChange={v => setTweak('showClients', v)} />
-          </TweakSection>
-        </TweaksPanel>
+        <>
+          {/* NAV */}
+          <nav>
+            <div className="nav-logo">AG<span>/</span>TECH</div>
+            <ul className="nav-links">
+              <li><a href="#about">{nav.about}</a></li>
+              <li><a href="#services">{nav.services}</a></li>
+              <li><a href="#stack">{nav.stack}</a></li>
+              <li><a href="#projects">{nav.projects}</a></li>
+              <li><a href="#contact">{nav.contact}</a></li>
+            </ul>
+            <a href="#contact" className="nav-cta">{nav.hire}</a>
+          </nav>
+
+          {/* HERO */}
+          <section id="hero">
+            <div className="hero-tag" style={{display: tweaks.availableForWork ? 'flex' : 'none'}}>{hero.badge}</div>
+            <h1 className="hero-headline">
+              {hero.h1a}<br/>
+              {hero.h1b} <em>{hero.h1em}</em><br/>
+              {hero.h1c}<br/>
+              {hero.h1d}
+            </h1>
+            <p className="hero-sub">{hero.sub}</p>
+            <div className="hero-actions">
+              <a href="#contact" className="btn-primary">{hero.cta1}</a>
+              <a href="#projects" className="btn-secondary">{hero.cta2}</a>
+            </div>
+            <div className="hero-bottom">
+              {/* Profile photo */}
+              <div className="hero-photo">
+                <img
+                  src="profile.jpg"
+                  alt="Profile photo"
+                  onError={e => { e.target.style.display='none'; }}
+                  onLoad={e => { const ph = document.getElementById('photo-placeholder'); if(ph) ph.style.display='none'; }}
+                />
+                <div className="hero-photo-placeholder" id="photo-placeholder">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="15" r="7" stroke="#8a9099" strokeWidth="1.5"/>
+                    <path d="M6 35c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="#8a9099" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  <span>Add your photo<br/>as <strong style={{color:'var(--fg2)'}}>profile.jpg</strong><br/>in the project files</span>
+                </div>
+              </div>
+              {/* Terminal */}
+              <div className="hero-terminal">
+                <div className="terminal-bar">
+                  <div className="terminal-dot r"></div>
+                  <div className="terminal-dot y"></div>
+                  <div className="terminal-dot g"></div>
+                  <span className="terminal-title">agtech@dev ~ bash</span>
+                </div>
+                <Terminal lines={t.terminal} />
+              </div>
+            </div>
+          </section>
+
+          {/* ABOUT */}
+          <section id="about">
+            <div className="section-wrap">
+              <div className="section-label">{about.label}</div>
+              <div className="about-grid">
+                <div>
+                  <h2 className="section-title fade-up">{about.h2a}<br/>{about.h2b}<br/>{about.h2c}</h2>
+                  <div className="about-body fade-up">
+                    <p>{about.p1}</p>
+                    <p>{about.p2}</p>
+                    <p>{about.p3}</p>
+                  </div>
+                  {tweaks.showClients && (
+                    <div className="about-clients fade-up" style={{marginTop:'2rem'}}>
+                      <div className="clients-label">{about.clientsLabel}</div>
+                      <div className="clients-list">
+                        {['Audi','Ferrari','Volvo','BMW','Bosch','Magna'].map(c => (
+                          <span key={c} className="client-chip">{c}</span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                <div className="about-stats fade-up">
+                  {[['7+',about.stats[0]],['6',about.stats[1]],['3',about.stats[2]],['0',about.stats[3]]].map(([num,label]) => (
+                    <div key={label} className="stat-cell">
+                      <span className="stat-num">{num}</span>
+                      <span className="stat-label">{label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* SERVICES */}
+          <section id="services">
+            <div className="section-wrap">
+              <div className="section-label">{services.label}</div>
+              <h2 className="section-title fade-up">{services.h2}</h2>
+              <div className="services-grid">
+                {services.items.map((svc, i) => (
+                  <div key={i} className="service-card fade-up">
+                    <div className="service-num">0{i+1}</div>
+                    <div className="service-name">{svc.name}</div>
+                    <div className="service-desc">{svc.desc}</div>
+                    <div className="service-tags">
+                      {[
+                        ['C# / .NET 8','ASP.NET Core','EF Core'],
+                        ['REST','SQL','Swagger / OpenAPI'],
+                        ['Beckhoff TwinCAT','IEC 61131-3','EtherCAT'],
+                        ['GitHub Actions','Docker','Azure DevOps'],
+                      ][i].map(tag => <span key={tag} className="tag">{tag}</span>)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* STACK */}
+          <section id="stack">
+            <div className="section-wrap">
+              <div className="section-label">{stack.label}</div>
+              <h2 className="section-title fade-up">{stack.h2}</h2>
+              <div className="stack-rows fade-up">
+                {stackData.map((row, ri) => (
+                  <div key={ri} className="stack-row">
+                    <span className="stack-cat">{row.cat}</span>
+                    <div className="stack-items">
+                      {row.pills.map((p, pi) => (
+                        <span key={p} className={'stack-pill' + (row.primary.includes(pi) ? ' primary' : '')}>{p}</span>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* PROJECTS */}
+          <section id="projects">
+            <div className="section-wrap">
+              <div className="section-label">{projects.label}</div>
+              <h2 className="section-title fade-up">{projects.h2}</h2>
+              <div className="projects-list fade-up">
+                {projects.items.map((proj, i) => (
+                  <div key={i} className="project-row">
+                    <span className="project-index">0{i+1}</span>
+                    <div className="project-info">
+                      <div className="project-name">{proj.name}</div>
+                      <div className="project-desc">{proj.desc}</div>
+                      <div className="project-tags">
+                        {projectTags[i].map(tag => <span key={tag} className="tag">{tag}</span>)}
+                      </div>
+                    </div>
+                    <div className="project-status">{projects.status}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CONTACT */}
+          <section id="contact">
+            <div className="section-wrap">
+              <div className="section-label">{contact.label}</div>
+              <div className="contact-grid">
+                <div className="contact-info fade-up">
+                  <div>
+                    <h2 className="section-title">{contact.h2a}<br/>{contact.h2b}</h2>
+                    <p className="contact-blurb">{contact.blurb}</p>
+                  </div>
+                  <div className="contact-links">
+                    <a href="mailto:hello@agtech.dev" className="contact-link">
+                      <span className="contact-link-icon">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <rect x="1" y="3" width="12" height="8" rx="1" stroke="currentColor" strokeWidth="1.2"/>
+                          <path d="M1 4l6 4 6-4" stroke="currentColor" strokeWidth="1.2"/>
+                        </svg>
+                      </span>
+                      hello@agtech.dev
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" className="contact-link">
+                      <span className="contact-link-icon">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <rect x="1" y="1" width="12" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.2"/>
+                          <path d="M4 6v4M4 4.5v.01" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                          <path d="M7 10V7.5C7 6.7 7.7 6 8.5 6S10 6.7 10 7.5V10" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                        </svg>
+                      </span>
+                      linkedin.com/in/agtech
+                    </a>
+                  </div>
+                </div>
+                <div className="fade-up">
+                  <ContactForm t={t} />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* FOOTER */}
+          <footer>
+            <div className="footer-logo"><strong>AG</strong>/TECH — {t.footer}</div>
+            <div className="footer-copy">{t.footerCopy}</div>
+          </footer>
+
+          {/* TWEAKS PANEL */}
+          <TweaksPanel>
+            <TweakSection title="Accent Color">
+              <TweakColor label="Primary accent" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
+            </TweakSection>
+            <TweakSection title="Language / Lingua">
+              <TweakRadio
+                label="Site language"
+                value={tweaks.language}
+                options={[{label:'EN',value:'EN'},{label:'IT',value:'IT'}]}
+                onChange={v => setTweak('language', v)}
+              />
+            </TweakSection>
+            <TweakSection title="Visibility">
+              <TweakToggle label="Available for work badge" value={tweaks.availableForWork} onChange={v => setTweak('availableForWork', v)} />
+              <TweakToggle label="Show client list" value={tweaks.showClients} onChange={v => setTweak('showClients', v)} />
+            </TweakSection>
+          </TweaksPanel>
+        </>
       );
     }
 
     /* ── MOUNT ─────────────────────────────────────────────── */
-    // Terminal
-    const terminalRoot = document.getElementById('terminal-body');
-    if (terminalRoot) {
-      const tRoot = ReactDOM.createRoot(terminalRoot);
-      tRoot.render(<Terminal />);
-    }
-
-    // Contact form
-    const formRoot = document.getElementById('contact-form-root');
-    if (formRoot) {
-      const fRoot = ReactDOM.createRoot(formRoot);
-      fRoot.render(<ContactForm />);
-    }
-
-    // Tweaks
-    const tweaksMount = document.createElement('div');
-    document.body.appendChild(tweaksMount);
-    ReactDOM.createRoot(tweaksMount).render(<TweaksApp />);
+    const appMount = document.createElement('div');
+    appMount.id = 'app';
+    document.body.appendChild(appMount);
+    ReactDOM.createRoot(appMount).render(<Page />);
 
     /* ── SCROLL ANIMATIONS ─────────────────────────────────── */
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    // Re-observe after React renders
+    const observeFadeUps = () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    };
+    setTimeout(observeFadeUps, 300);
   </script>
 
 </body>
