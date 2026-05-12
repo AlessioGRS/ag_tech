@@ -156,7 +156,6 @@
       color: var(--fg2);
       max-width: 560px;
       line-height: 1.7;
-      margin-bottom: 3rem;
     }
     .hero-actions {
       display: flex;
@@ -200,6 +199,7 @@
       gap: 2rem;
       align-items: flex-start;
       flex-wrap: wrap;
+	  margin-bottom: 4rem;
     }
 
     /* photo card */
@@ -696,7 +696,7 @@
         nav: { about:'About', services:'Services', stack:'Stack', projects:'Projects', contact:'Contact', hire:'Hire me' },
         hero: {
           badge: 'Available for freelance work',
-          h1a: 'I automate', h1b: 'the', h1em: 'boring stuff', h1c: 'so your business', h1d: 'can move faster.',
+          h1a: 'Innovation', h1b: 'that', h1em: 'evolves', h1c: 'your processes.',
           sub: 'Software engineer specialised in .NET backend, PLC automation & CI/CD — 7 years shipping industrial-grade systems for the automotive sector.',
           cta1: 'Send an email', cta2: 'See my work',
         },
@@ -764,7 +764,7 @@
         },
         about: {
           label: '01 — Chi sono',
-          h2a: 'Ingegnere per', h2b: 'mestiere. Automatore', h2c: 'per passione.',
+          h2a: 'Engineering digitale', h2b: 'per automazione e processi', h2c: 'ad alta efficienza.',
           p1: "Sono un ingegnere software freelance con 7 anni di esperienza nello sviluppo di sistemi backend robusti e soluzioni di automazione industriale. Il mio lavoro si trova all'intersezione tra software e hardware — scrivere codice preciso e manutenibile che controlla macchine reali e gestisce linee di produzione.",
           p2: "Ho progettato e consegnato sistemi per alcuni dei nomi più esigenti nel settore automobilistico, dove l'affidabilità non è opzionale e i fermi macchina non sono mai accettabili.",
           p3: 'Lavoro in modo indipendente, comunico con chiarezza e rispetto le scadenze.',
@@ -978,7 +978,6 @@
 
           {/* HERO */}
           <section id="hero">
-            <!-- <div className="hero-tag" style={{display: tweaks.availableForWork ? 'flex' : 'none'}}>{hero.badge}</div> -->
             <h1 className="hero-headline">
               {hero.h1a}<br/>
               {hero.h1b} <em>{hero.h1em}</em><br/>
@@ -986,10 +985,6 @@
               {hero.h1d}
             </h1>
             <p className="hero-sub">{hero.sub}</p>
-            <div className="hero-actions">
-              <a href="#contact" className="btn-primary">{hero.cta1}</a>
-              <a href="#projects" className="btn-secondary">{hero.cta2}</a>
-            </div>
             <div className="hero-bottom">
               {/* Profile photo */}
               <div className="hero-photo">
@@ -1016,7 +1011,11 @@
                   <span className="terminal-title">agtech@dev ~ bash</span>
                 </div>
                 <Terminal lines={t.terminal} />
-              </div>
+              </div>			
+            </div>
+			<div className="hero-actions">
+              <a href="#contact" className="btn-primary">{hero.cta1}</a>
+              <a href="#projects" className="btn-secondary">{hero.cta2}</a>
             </div>
           </section>
 
@@ -1044,7 +1043,7 @@
                   )}
                 </div>
                 <div className="about-stats fade-up">
-                  {[['7+',about.stats[0]],['6',about.stats[1]],['3',about.stats[2]],['0',about.stats[3]]].map(([num,label]) => (
+                  {[['7+',about.stats[0]],['10+',about.stats[1]],['3',about.stats[2]],['0',about.stats[3]]].map(([num,label]) => (
                     <div key={label} className="stat-cell">
                       <span className="stat-num">{num}</span>
                       <span className="stat-label">{label}</span>
@@ -1054,7 +1053,6 @@
               </div>
             </div>
           </section>
-
           {/* SERVICES */}
           <section id="services">
             <div className="section-wrap">
