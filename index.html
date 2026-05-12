@@ -23,7 +23,7 @@
       --border2:   rgba(255,255,255,0.13);
       --fg:        #e8eaeb;
       --fg2:       #8a9099;
-      --fg3:       #4a5158;
+      --fg3:       #6a7078;
       --accent:    oklch(0.72 0.18 142);
       --accent2:   oklch(0.72 0.18 200);
       --accent-dim: oklch(0.35 0.10 142);
@@ -239,6 +239,7 @@
       font-size: 0.62rem;
       letter-spacing: 0.1em;
       color: var(--fg3);
+      font-weight: 600;
       line-height: 1.6;
     }
     /* accent corner tag */
@@ -259,6 +260,7 @@
     .hero-terminal {
       flex: 1;
       min-width: 280px;
+      height: 293px;
       background: var(--bg2);
       border: 1px solid var(--border2);
       border-radius: 4px;
@@ -283,6 +285,7 @@
       font-family: var(--mono);
       font-size: 0.65rem;
       color: var(--fg3);
+      font-weight: 600;
       margin-left: 0.5rem;
     }
     .terminal-body {
@@ -378,12 +381,24 @@
       color: var(--accent);
       line-height: 1;
     }
-    .stat-label {
+.stat-label {
       font-family: var(--mono);
       font-size: 0.68rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--fg3);
+      font-weight: 600;
+    }
+    .about-clients {
+      margin-top: 2rem;
+    }
+    .clients-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--fg3);
+      font-weight: 600;
     }
     .about-clients {
       margin-top: 2rem;
@@ -478,6 +493,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--fg3);
+      font-weight: 600;
       padding: 1.25rem 1.5rem;
       border-right: 1px solid var(--border);
       display: flex;
@@ -519,6 +535,7 @@
       font-family: var(--mono);
       font-size: 0.65rem;
       color: var(--fg3);
+      font-weight: 600;
       letter-spacing: 0.1em;
     }
     .project-info { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -702,7 +719,7 @@
         },
         about: {
           label: '01 — About',
-          h2a: 'Engineer by', h2b: 'trade. Automator', h2c: 'by passion.',
+          h2a: 'Digital engineering', h2b: 'for automation and', h2c: 'high-efficiency processes.',
           p1: "I'm a freelance software engineer with 7 years of experience building robust backend systems and industrial automation solutions. My work sits at the intersection of software and hardware — writing precise, maintainable code that controls real machines and runs production lines.",
           p2: "I've designed and delivered systems for some of the most demanding names in automotive manufacturing, where reliability isn't optional and downtime is never acceptable.",
           p3: 'I work independently, communicate clearly, and deliver on time.',
