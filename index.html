@@ -612,6 +612,7 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--fg3);
+      font-weight: 600;
     }
     .form-input, .form-textarea {
       background: var(--bg3);
@@ -658,12 +659,14 @@
       font-family: var(--mono);
       font-size: 0.8rem;
       color: var(--fg3);
+      font-weight: 600;
     }
     .footer-logo strong { color: var(--accent); }
     .footer-copy {
       font-family: var(--mono);
       font-size: 0.65rem;
       color: var(--fg3);
+      font-weight: 600;
       letter-spacing: 0.05em;
     }
 
@@ -885,10 +888,25 @@
       const [status, setStatus] = useState('idle');
 
       const handle = (e) => setForm(prev => ({...prev, [e.target.name]: e.target.value}));
-      const submit = (e) => {
+      const submit = async (e) => {
         e.preventDefault();
         setStatus('sending');
-        setTimeout(() => setStatus('sent'), 1400);
+        try {
+          const res = await fetch('https://formspree.io/f/xykvoken', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(form),
+          });
+          if (res.ok) {
+            setStatus('sent');
+          } else {
+            setStatus('idle');
+            alert('Something went wrong. Please try again or email me directly at alessio.grasselli@outlook.com');
+          }
+        } catch {
+          setStatus('idle');
+          alert('Network error. Please try again or email me directly at alessio.grasselli@outlook.com');
+        }
       };
 
       if (status === 'sent') {
