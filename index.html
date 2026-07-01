@@ -593,6 +593,7 @@
       transition: color 0.2s;
     }
     .contact-link:hover { color: var(--accent); }
+    .contact-location, .contact-location:hover { color: var(--fg2); cursor: default; }
     .contact-link-icon {
       width: 32px; height: 32px;
       border: 1px solid var(--border2);
@@ -756,6 +757,7 @@
           label: '05 — Contact',
           h2a: "Let's work", h2b: 'together.',
           blurb: "Have a project that needs precision engineering? I'm available for freelance engagements — short sprints or long-term contracts.",
+          location: 'San Ginesio (MC), Italy',
           fields: { name:'Name', email:'Email', company:'Company / Project', message:'Message', submit:'Send message →', sending:'Sending...', namePh:'Jane Smith', companyPh:'Acme Corp', messagePh:'Tell me about your project...' },
           successTitle: 'Message received',
           successMsg: "Thanks — I'll be in touch shortly.",
@@ -818,6 +820,7 @@
           label: '05 — Contatti',
           h2a: 'Lavoriamo', h2b: 'insieme.',
           blurb: "Hai un progetto che richiede ingegneria di precisione? Sono disponibile per incarichi freelance — sprint brevi o contratti a lungo termine.",
+          location: 'San Ginesio (MC), Italia',
           fields: { name:'Nome', email:'Email', company:'Azienda / Progetto', message:'Messaggio', submit:'Invia messaggio →', sending:'Invio...', namePh:'Mario Rossi', companyPh:'Acme Srl', messagePh:'Raccontami del tuo progetto...' },
           successTitle: 'Messaggio ricevuto',
           successMsg: "Grazie — ti risponderò a breve.",
@@ -1187,6 +1190,15 @@
                       </span>
                       linkedin.com/in/alessio-grasselli-376504179/
                     </a>
+                    <span className="contact-link contact-location">
+                      <span className="contact-link-icon">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M7 1C4.5 1 2.5 3 2.5 5.5C2.5 9 7 13 7 13S11.5 9 11.5 5.5C11.5 3 9.5 1 7 1Z" stroke="currentColor" strokeWidth="1.2"/>
+                          <circle cx="7" cy="5.5" r="1.5" stroke="currentColor" strokeWidth="1.2"/>
+                        </svg>
+                      </span>
+                      {contact.location}
+                    </span>
                   </div>
                 </div>
                 <div className="fade-up">
